@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Events</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+    
+       <nav class="navbar navbar-expand-md navbar-dark shadow-sm sticky-top">
+            <div class="container">
+                <a href="#" class="navbar-brand">
+                    <img class="logo" src="./imgs/simple-bird-logo-85e657d5-4725-4448-ae57-4696e8d38dea.jpg" alt="logo">
+                </a>
+                <p class="name">Nexues Events</p>
+                <div class="language-switcher">
+                    <script src="./js/lang.js"></script>
+                    <button id="arabic-btn" class="flag-button" title="العربية">
+                        <img src="./imgs/syria-flag.png" alt="Arabic Flag">
+                    </button>
+                    <button id="english-btn" class="flag-button" title="English">
+                        <img src="./imgs/usa-flag.png" alt="USA Flag">
+                    </button>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main"
+                    aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse cc" id="main">
+                    <ul class="navbar-nav ms-auto mb-lg-0 mb-2">
+                        <li class="nav-item">
+                            <a href="./index.html" class="nav-link active" data-en="Home" aria-current="page">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link light" data-en="Events">الفعاليات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./about.html" class="nav-link" data-en="About Us">نظرتنا</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./contact.html" class="nav-link" data-en="Contact Us">اتصل بنا</a>
+                        </li>
+                        <li class="nav-item">
+                            <button id="theme-toggle-btn" class="nav-link">Dark Mode</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    <main>
+
+        <div class="container mt-5">
+            <h3 class="allev">جميع الفعاليات</h3>
+             <div class="row mb-4">
+                <div class="col-lg-8 mx-auto">
+                    <div class="filter-controls card p-4">
+                        <div class="row g-3 fltr">
+                            <div class="col-md-4">
+                                <select class="form-select" id="cat">
+                                    <option value="">جميع التصنيفات</option>
+                                    <option value="music">موسيقي</option>
+                                    <option value="sport">رياضي</option>
+                                    <option value="calu">ثقافي</option>
+                                    <option value="family">عائلي</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="date" class="form-control" id="dateFilter">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="searchFilter" placeholder="ابحث عن فعالية...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="events-container" class="row">
+                            <script src="./js/main.js"></script>
+                            <script>
+                    const r = document.getElementById('events-container');
+                    eventsData.forEach(event => {
+                        const column = document.createElement('div');
+                        column.className = 'col-md-4 mb-4'; 
+
+                        column.innerHTML = `
+                            <div class="card h-100">
+                                <img src="${event.image}" class="card-img-top" alt="${event.title}"/>
+                                <div class="card-body d-flex flex-column text-center">
+                                    <h5 class="card-title">${event.title}</h5>
+                                    <p class="card-text">${event.date}</p>
+                                    <a href="event.html?id=${event.id}" class="btn btn-primary mt-auto">التفاصيل</a>
+                                </div>
+                            </div>
+                        
+                                `
+                        r.appendChild(column);
+                    });
+                            </script>
+           <script>
+                    const eventsContainer = document.getElementById('events-container');
+                    const params = new URLSearchParams(window.location.search);
+                    const categoryName = params.get('category');
+                     
+                    let eventsToShow;
+                    if (categoryName) {
+                        eventsToShow = eventsData.filter(event => event.category === categoryName);
+                    }
+                    else 
+                    {
+                        eventsToShow = eventsData; 
+                    }
+                   
+
+                    if (eventsToShow && eventsToShow.length > 0) {
+                        eventsContainer.innerHTML = ''; 
+                        eventsToShow.forEach(event => {
+                            const column = document.createElement('div');
+                            column.className = 'col-md-4 mb-4';
+                            column.innerHTML =` 
+                                <div class="card h-100">
+                                    <img src="${event.image}" class="card-img-top ppp" alt="${event.title.ar}" />
+                                    <div class="card-body text-center d-flex flex-column">
+                                        <h5 class="card-title" data-en="${event.title.en}">${event.title.ar}</h5>
+                                        <p class="card-text" data-en="${event.date.en}">${event.date.ar}</p>
+                                        <a href="event.html?id=${event.id}" class="btn btn-primary mt-auto" data-en="Details">التفاصيل</a>
+                                    </div>
+                                </div>
+                            `;
+                            eventsContainer.appendChild(column);
+                        });
+                    } else {
+                        eventsContainer.innerHTML = '<p class="col-12" data-en="No events found in this category.">لا توجد فعاليات في هذا التصنيف حالياً.</p>';
+                    }
+         </script>
+                    </div>
+
+        </div>
+    </main>
+    <footer>
+        <div class="info container  ">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="about">
+                                <h5 data-en="About Us">نظرتنا</h5>
+                                <p data-en="Don't miss any more events!We help you discover new and exciting experiences, and connect you with the beating heart of your life">لا تفوّت أي فعالية بعد الآن! نساعدك على اكتشاف تجارب جديدة ومثيرة، ونوصلك بقلب مدينتك النابض بالحياة.
+                                </p>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-4">
+                            <div class="soc">
+                                <h5 data-en="Direct Links">روابط مباشرة</h5>
+                                <div class="Social-icons">
+                                    <div class="con">
+                                        <i class="fab fa-instagram"></i>
+                                        <p>Instagram</p>
+                                    </div>
+                                   <div class="con">
+                                        <i class="fab fa-twitter"></i>
+                                         <p>Twitter</p>
+                                   </div class="con">
+                                   <div>
+                                         <i class="fab fa-linkedin-in"></i>
+                                         <p>Linkedin</p>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="contact">
+                        <h5 data-en="Contact Us">اتصل بنا</h5>
+                            <div class="ph">
+                                <a href="tel:0993487453">  0993487453<i class="fas fa-phone"> </i></a>
+                                <a href="tel:0993487453">  0992376152<i class="fas fa-phone"> </i></a>
+                            </div>
+                        <a href="mailto:alimarouf884@gmail.com">  alimarouf@gmail.com<i class="fas fa-envelope"></i></a>
+                        <!-- <p>or visit us in our location : 10928 , NY , 45 ST</p> -->
+                        </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="copyright" data-en="2025 All rights reserved.">&copy; 2025 حقوق النشر محفوظة</div>
+        </div>
+    </footer>
+    <script src="./js/lang.js"></script>
+    <script src="./js/darkmode.js"></script>
+ <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
